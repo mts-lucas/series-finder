@@ -3,10 +3,21 @@ from django.db import models
 # Create your models here.
 
 
+class Gender(models.Model):
+    name = models.CharField(max_length=45)
+
+
 class Serie(models.Model):
     title = models.CharField(max_length=80)
     description = models.CharField(max_length=300)
     premiere_date = models.DateField(null=False, blank=False)
+
+    gender = models.ForeignKey(
+        Gender,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        default=None,)
 
     PUB_STATUS = (
         ('p', 'published'),
