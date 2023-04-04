@@ -7,7 +7,19 @@ class Serie(models.Model):
     title = models.CharField(max_length=80)
     description = models.CharField(max_length=300)
     premiere_date = models.DateField(null=False, blank=False)
-    is_published = models.BooleanField(default=False)
+
+    PUB_STATUS = (
+        ('p', 'published'),
+        ('n', 'not published'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=PUB_STATUS,
+        blank=True,
+        default='n',
+        help_text='pub status',
+    )
 
     def __str__(self) -> str:
         return self.title
@@ -18,15 +30,16 @@ class Season(models.Model):
     number = models.IntegerField(null=False, blank=False, default=1)
     description = models.CharField(max_length=300)
     premiere_date = models.DateField(null=False, blank=False)
-    episodes = models.ForeignKey(
+    serie = models.ForeignKey(
         Serie,
         on_delete=models.CASCADE,
-        null=True,
+        null=False,
         blank=False,
-        default=None,)
+        default=None,
+        related_name='seasons',)
 
     def __str__(self) -> str:
-        return f'season {self.number}'
+        return f'{self.serie} S{self.number}'
 
 
 class Episode(models.Model):
@@ -38,9 +51,10 @@ class Episode(models.Model):
     season = models.ForeignKey(
         Season,
         on_delete=models.CASCADE,
-        null=True,
+        null=False,
         blank=False,
-        default=None,)
+        default=None,
+        related_name='episodes',)
 
     def __str__(self) -> str:
-        return f'{self.number} - {self.title}'
+        return f'{self.season}{self.number}'
