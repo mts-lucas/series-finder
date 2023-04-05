@@ -14,3 +14,14 @@
 
 # Endpoint de plataforma de streaming - Listar as plataformas
 # de streaming onde uma série está disponível
+
+
+from rest_framework import serializers
+
+from .models import Episode, Gender, Season, Serie
+
+
+class GenderSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Gender
+        fields = '__all__'
