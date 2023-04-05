@@ -12,7 +12,7 @@ class Serie(models.Model):
     description = models.CharField(max_length=300)
     premiere_date = models.DateField(null=False, blank=False)
 
-    gender = models.ManyToManyField(Gender)
+    genders = models.ManyToManyField(Gender)
 
     PUB_STATUS = (
         ('p', 'published'),
