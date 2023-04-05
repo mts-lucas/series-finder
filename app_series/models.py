@@ -17,19 +17,6 @@ class Serie(models.Model):
 
     genders = models.ManyToManyField(Gender, related_name='series')
 
-    PUB_STATUS = (
-        ('p', 'published'),
-        ('n', 'not published'),
-    )
-
-    status = models.CharField(
-        max_length=1,
-        choices=PUB_STATUS,
-        blank=True,
-        default='n',
-        help_text='pub status',
-    )
-
     def __str__(self) -> str:
         return self.title
 

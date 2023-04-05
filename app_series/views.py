@@ -29,8 +29,9 @@
 
 from rest_framework import permissions, viewsets
 
-from .models import Gender, Serie
-from .serializers import GenderSerializer, SerieSerializer
+from .models import Episode, Gender, Season, Serie
+from .serializers import (EpisodeSerializer, GenderSerializer,
+                          SeasonSerializer, SerieSerializer)
 
 # from rest_framework.response import Response
 # from rest_framework.views import APIView
@@ -49,6 +50,19 @@ class SeriesViewSet(viewsets.ModelViewSet):
     serializer_class = SerieSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+
+class EpisodesViewSet(viewsets.ModelViewSet):
+
+    queryset = Episode.objects.all().order_by('season__serie', 'number')
+    serializer_class = EpisodeSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class SeasonViewSet(viewsets.ModelViewSet):
+
+    queryset = Season.objects.all().order_by('serie', 'number')
+    serializer_class = SeasonSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # class GenderSeriesViewSet(APIView):
 
