@@ -27,12 +27,13 @@
 # façam alterações no recurso, enquanto usuários não autenticados
 # podem apenas visualizá-lo (leitura).
 
-from rest_framework import permissions, status, viewsets
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import permissions, viewsets
 
 from .models import Gender, Serie
 from .serializers import GenderSerializer, SerieSerializer
+
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
 
 
 class GendersViewSet(viewsets.ModelViewSet):
@@ -44,25 +45,25 @@ class GendersViewSet(viewsets.ModelViewSet):
 
 class SeriesViewSet(viewsets.ModelViewSet):
 
-    queryset = Serie.objects.all().order_by('name')
+    queryset = Serie.objects.all().order_by('title')
     serializer_class = SerieSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class GenderSeriesViewSet(APIView):
+# class GenderSeriesViewSet(APIView):
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    serializer_class = SerieSerializer
+#     serializer_class = SerieSerializer
 
-    def get_queryset(self):
+#     def get_queryset(self):
 
-        queryset = Serie.objects.all()
-        gender_name = self.request.query_params.get('gender', None)
-        if gender_name is not None:
-            queryset = queryset.filter(genders__name=gender_name)
-        else:
-            return Response(
-                {'error': 'Please, insert a valid id for your request.'},
-                status=status.HTTP_400_BAD_REQUEST)
-        return queryset
+#         queryset = Serie.objects.all()
+#         gender_name = self.request.query_params.get('gender', None)
+#         if gender_name is not None:
+#             queryset = queryset.filter(genders__name=gender_name)
+#         else:
+#             return Response(
+#                 {'error': 'Please, insert a valid id for your request.'},
+#                 status=status.HTTP_400_BAD_REQUEST)
+#         return queryset

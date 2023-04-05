@@ -6,6 +6,9 @@ from django.db import models
 class Gender(models.Model):
     name = models.CharField(max_length=45)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Serie(models.Model):
     title = models.CharField(max_length=80)
@@ -63,4 +66,4 @@ class Episode(models.Model):
         related_name='episodes',)
 
     def __str__(self) -> str:
-        return f'{self.season}{self.number}'
+        return f'{self.season}E{self.number}'
