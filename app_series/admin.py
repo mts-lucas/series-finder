@@ -1,8 +1,18 @@
 from django.contrib import admin
 
-from .models import Episode, Season, Serie
+from .models import Episode, Gender, Platform, Season, Serie
 
 # Register your models here.
+
+
+@admin.register(Platform)
+class PlatformAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(Gender)
+class GenderAdmin(admin.ModelAdmin):
+    ...
 
 
 @admin.register(Episode)

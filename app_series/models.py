@@ -3,6 +3,13 @@ from django.db import models
 # Create your models here.
 
 
+class Platform(models.Model):
+    name = models.CharField(max_length=45)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Gender(models.Model):
     name = models.CharField(max_length=45)
 
@@ -16,6 +23,8 @@ class Serie(models.Model):
     premiere_date = models.DateField(null=False, blank=False)
 
     genders = models.ManyToManyField(Gender, related_name='series')
+
+    platforms = models.ManyToManyField(Platform, related_name='platforms')
 
     def __str__(self) -> str:
         return self.title
