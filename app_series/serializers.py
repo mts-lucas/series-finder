@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from .models import Episode, Gender, Season, Serie
+from .models import Episode, Gender, Platform, Season, Serie
+
+
+class PlatformSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Platform
+        fields = '__all__'
 
 
 class GenderSerializer(serializers.HyperlinkedModelSerializer):

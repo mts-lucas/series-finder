@@ -29,12 +29,17 @@
 
 from rest_framework import permissions, viewsets
 
-from .models import Episode, Gender, Season, Serie
+from .models import Episode, Gender, Platform, Season, Serie
 from .serializers import (EpisodeSerializer, GenderSerializer,
-                          SeasonSerializer, SerieSerializer)
+                          PlatformSerializer, SeasonSerializer,
+                          SerieSerializer)
 
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
+
+class PlatformsViewSet(viewsets.ModelViewSet):
+
+    queryset = Platform.objects.all().order_by('name')
+    serializer_class = PlatformSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class GendersViewSet(viewsets.ModelViewSet):
