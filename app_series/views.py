@@ -1,20 +1,3 @@
-# Endpoint de busca - Permitir aos usuários
-# pesquisar por séries pelo nome ou gênero.
-
-# Endpoint de detalhes da série - Fornecer informações
-# sobre uma série específica, como enredo, datas de lançamento,
-# bem como a disponibilidade em diferentes plataformas de streaming.
-
-# Endpoint de episódios - Listar episódios de uma série,
-# incluindo informações sobre o título do episódio,
-# sinopse, duração, data de lançamento.
-
-# Endpoint de gêneros - Permitir que os usuários pesquisem por séries
-# por gênero, incluindo comédia, drama, terror, ação, etc.
-
-# Endpoint de plataforma de streaming - Listar as plataformas
-# de streaming onde uma série está disponível
-
 # O atributo permission_classes é uma lista de classes de permissão
 # que serão aplicadas a todas as operações HTTP disponíveis na ViewSet.
 # As classes de permissão mais comuns no Django REST framework incluem:
@@ -68,21 +51,3 @@ class SeasonViewSet(viewsets.ModelViewSet):
     queryset = Season.objects.all().order_by('serie', 'number')
     serializer_class = SeasonSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-# class GenderSeriesViewSet(APIView):
-
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-#     serializer_class = SerieSerializer
-
-#     def get_queryset(self):
-
-#         queryset = Serie.objects.all()
-#         gender_name = self.request.query_params.get('gender', None)
-#         if gender_name is not None:
-#             queryset = queryset.filter(genders__name=gender_name)
-#         else:
-#             return Response(
-#                 {'error': 'Please, insert a valid id for your request.'},
-#                 status=status.HTTP_400_BAD_REQUEST)
-#         return queryset
