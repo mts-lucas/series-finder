@@ -11,6 +11,8 @@
 # podem apenas visualizá-lo (leitura).
 
 from rest_framework import permissions, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Episode, Gender, Platform, Season, Serie
 from .serializers import (EpisodeSerializer, GenderSerializer,
@@ -24,6 +26,15 @@ class PlatformsViewSet(viewsets.ModelViewSet):
     serializer_class = PlatformSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+# criando metodo que exibe todas as series de uma plataforma
+
+    @action(detail=True, methods=['get'])
+    def series_list(self, request, pk=None):
+        platform = self.get_object()
+        series = platform.series.all()
+        serializer = SerieSerializer(series, many=True)
+        return Response(serializer.data)
+
 
 class GendersViewSet(viewsets.ModelViewSet):
 
@@ -31,12 +42,26 @@ class GendersViewSet(viewsets.ModelViewSet):
     serializer_class = GenderSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    @action(detail=True, methods=['get'])
+    def series_list(self, request, pk=None):
+        gender = self.get_object()
+        series = gender.series.all()
+        serializer = GenderSerializer(series, many=True)
+        return Response(serializer.data)
+
 
 class SeriesViewSet(viewsets.ModelViewSet):
 
     queryset = Serie.objects.all().order_by('title')
     serializer_class = SerieSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    @action(detail=True, methods=['get'])
+    def series_list(self, request, pk=None):
+        serie = self.get_object()
+        seasons = serie.seasons.all()
+        serializer = SeasonSerializer(seasons, many=True)
+        return Response(serializer.data)
 
 
 class EpisodesViewSet(viewsets.ModelViewSet):
