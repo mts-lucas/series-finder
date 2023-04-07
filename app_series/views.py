@@ -10,7 +10,7 @@
 # façam alterações no recurso, enquanto usuários não autenticados
 # podem apenas visualizá-lo (leitura).
 
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -25,8 +25,6 @@ class PlatformsViewSet(viewsets.ModelViewSet):
     queryset = Platform.objects.all().order_by('name')
     serializer_class = PlatformSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-# criando metodo que exibe todas as series de uma plataforma
 
     @action(detail=True, methods=['get'])
     def series_list(self, request, pk=None):
@@ -57,11 +55,35 @@ class SeriesViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(detail=True, methods=['get'])
-    def series_list(self, request, pk=None):
+    def seasons_list(self, request, pk=None):
         serie = self.get_object()
         seasons = serie.seasons.all()
         serializer = SeasonSerializer(seasons, many=True)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def episodes_list(self, request, pk=None):
+        serie = self.get_object()
+        episodes = Episode.objects.filter(
+            season__serie=serie).order_by('season__number', 'number')
+        serializer = EpisodeSerializer(episodes, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        title = request.query_params.get('title', None)
+        if title is None:
+            return Response({'error': 'Missing parameter "title"'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            title.replace('_', ' ')
+            serie = Serie.objects.get(title=title)
+            serializer = SerieSerializer(serie)
+            return Response(serializer.data)
+        except Serie.DoesNotExist:
+            return Response({'error': 'Serie not found'},
+                            status=status.HTTP_404_NOT_FOUND)
 
 
 class EpisodesViewSet(viewsets.ModelViewSet):
@@ -76,3 +98,10 @@ class SeasonViewSet(viewsets.ModelViewSet):
     queryset = Season.objects.all().order_by('serie', 'number')
     serializer_class = SeasonSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    @action(detail=True, methods=['get'])
+    def episodes_list(self, request, pk=None):
+        season = self.get_object()
+        episodes = season.episodes.all()
+        serializer = EpisodeSerializer(episodes, many=True)
+        return Response(serializer.data)
