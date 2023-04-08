@@ -10,7 +10,7 @@
 # façam alterações no recurso, enquanto usuários não autenticados
 # podem apenas visualizá-lo (leitura).
 
-from rest_framework import permissions, status, viewsets
+from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -72,22 +72,6 @@ class SeriesViewSet(viewsets.ModelViewSet):
         serializer = EpisodeSerializer(
             episodes, many=True, context={'request': request})
         return Response(serializer.data)
-
-    @action(detail=False, methods=['get'])
-    def search(self, request):
-        title = request.query_params.get('title', None)
-        if title is None:
-            return Response({'error': 'Missing parameter "title"'},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            title.replace('_', ' ')
-            serie = Serie.objects.get(title=title)
-            serializer = SerieSerializer(serie, context={'request': request})
-            return Response(serializer.data)
-        except Serie.DoesNotExist:
-            return Response({'error': 'Serie not found'},
-                            status=status.HTTP_404_NOT_FOUND)
 
 
 class EpisodesViewSet(viewsets.ModelViewSet):

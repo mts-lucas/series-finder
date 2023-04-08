@@ -15,18 +15,16 @@ urlpatterns = [
     path('genders/int:<pk>/series/',
          views.GendersViewSet.as_view({'get': 'series'}),
          name='gender-series'),
-    path('series/int:<pk>//seasons/',
+    path('series/int:<pk>/seasons/',
          views.SeriesViewSet.as_view({'get': 'seasons'}),
          name='serie-seasons'),
-    path('series/int:<pk>//episodes/',
+    path('series/int:<pk>/episodes/',
          views.SeriesViewSet.as_view({'get': 'episodes'}),
          name='series-episodes'),
-    path('series/search/', views.SeriesViewSet.as_view({'get': 'search'}),
-         name='serie-search'),
-    path('seasons/int:<pk>//episodes/',
+    path('seasons/int:<pk>/episodes/',
          views.SeasonViewSet.as_view(
              {'get': 'episodes'}), name='season-episodes'),
-    path('platforms/int:<pk>//series/',
+    path('platforms/int:<pk>/series/',
          views.PlatformsViewSet.as_view(
              {'get': 'series'}), name='platform-series'),
 ]
