@@ -21,21 +21,21 @@ Essa é uma API de séries que foi construída utilizando Django Rest Framework.
 
 A API possui os seguintes endpoints:
 
-- `/api/platforms/`: Retorna a lista de todas as plataformas de streaming disponíveis.
-- `/api/platforms/<id>/`: Retorna os detalhes de uma plataforma específica.
-- `/api/platforms/<id>/series_list/`: Retorna a lista de todas as séries disponíveis em uma plataforma específica.
-- `/api/genders/`: Retorna a lista de todos os gêneros disponíveis.
-- `/api/genders/<id>/`: Retorna os detalhes de um gênero específico.
-- `/api/genders/<id>/series_list/`: Retorna a lista de todas as séries disponíveis em um gênero específico.
-- `/api/series/`: Retorna a lista de todas as séries disponíveis.
-- `/api/series/<id>/`: Retorna os detalhes de uma série específica.
-- `/api/series/<id>/seasons_list/`: Retorna a lista de todas as temporadas disponíveis de uma série específica.
-- `/api/series/<id>/episodes_list/`: Retorna a lista de todos os episódios disponíveis de uma série específica.
-- `/api/seasons/`: Retorna a lista de todas as temporadas disponíveis no sistema independente da série.
-- `/api/seasons/<id>/`: Retorna os detalhes de uma temporada específica.
-- `/api/seasons/<id>/episodes_list/`: Retorna a lista de todos os episódios disponíveis de uma temporada específica.
-- `/api/episodes/`: Retorna a lista de todos os episódios disponíveis.
-- `/api/episodes/<id>/`: Retorna os detalhes de um episódio específico.
+- `/platforms/`: Retorna a lista de todas as plataformas de streaming disponíveis.
+- `/platforms/<id>/`: Retorna os detalhes de uma plataforma específica.
+- `/platforms/<id>/series_list/`: Retorna a lista de todas as séries disponíveis em uma plataforma específica.
+- `/genders/`: Retorna a lista de todos os gêneros disponíveis.
+- `/genders/<id>/`: Retorna os detalhes de um gênero específico.
+- `/genders/<id>/series_list/`: Retorna a lista de todas as séries disponíveis em um gênero específico.
+- `/series/`: Retorna a lista de todas as séries disponíveis.
+- `/series/<id>/`: Retorna os detalhes de uma série específica.
+- `/series/<id>/seasons_list/`: Retorna a lista de todas as temporadas disponíveis de uma série específica.
+- `/series/<id>/episodes_list/`: Retorna a lista de todos os episódios disponíveis de uma série específica.
+- `/seasons/`: Retorna a lista de todas as temporadas disponíveis no sistema independente da série.
+- `/seasons/<id>/`: Retorna os detalhes de uma temporada específica.
+- `/seasons/<id>/episodes_list/`: Retorna a lista de todos os episódios disponíveis de uma temporada específica.
+- `/episodes/`: Retorna a lista de todos os episódios disponíveis.
+- `/episodes/<id>/`: Retorna os detalhes de um episódio específico.
 
 
 <h1>Licença</h1>
