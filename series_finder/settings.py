@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []      # type: ignore
+ALLOWED_HOSTS = ['https://series-finder.onrender.com']      # type: ignore
 
 
 # Application definition
