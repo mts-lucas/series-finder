@@ -19,6 +19,8 @@ class Gender(models.Model):
 
 class Serie(models.Model):
     title = models.CharField(max_length=80)
+    poster = models.ImageField(
+        upload_to='app_series/poster/%Y/%m/%d/', blank=True, default='')
     description = models.CharField(max_length=300)
     premiere_date = models.DateField(null=False, blank=False)
 
