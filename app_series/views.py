@@ -29,8 +29,9 @@ class PlatformsViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def series_list(self, request, pk=None):
         platform = self.get_object()
-        series = platform.series.all()
-        serializer = SerieSerializer(series, many=True)
+        series = Serie.objects.filter(platforms=platform)
+        serializer = SerieSerializer(
+            series, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -43,8 +44,9 @@ class GendersViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def series_list(self, request, pk=None):
         gender = self.get_object()
-        series = gender.series.all()
-        serializer = GenderSerializer(series, many=True)
+        series = Serie.objects.filter(genders=gender)
+        serializer = SerieSerializer(
+            series, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -58,7 +60,8 @@ class SeriesViewSet(viewsets.ModelViewSet):
     def seasons_list(self, request, pk=None):
         serie = self.get_object()
         seasons = serie.seasons.all()
-        serializer = SeasonSerializer(seasons, many=True)
+        serializer = SeasonSerializer(
+            seasons, many=True, context={'request': request})
         return Response(serializer.data)
 
     @action(detail=True, methods=['get'])
@@ -66,7 +69,8 @@ class SeriesViewSet(viewsets.ModelViewSet):
         serie = self.get_object()
         episodes = Episode.objects.filter(
             season__serie=serie).order_by('season__number', 'number')
-        serializer = EpisodeSerializer(episodes, many=True)
+        serializer = EpisodeSerializer(
+            episodes, many=True, context={'request': request})
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
@@ -79,7 +83,7 @@ class SeriesViewSet(viewsets.ModelViewSet):
         try:
             title.replace('_', ' ')
             serie = Serie.objects.get(title=title)
-            serializer = SerieSerializer(serie)
+            serializer = SerieSerializer(serie, context={'request': request})
             return Response(serializer.data)
         except Serie.DoesNotExist:
             return Response({'error': 'Serie not found'},
@@ -103,5 +107,6 @@ class SeasonViewSet(viewsets.ModelViewSet):
     def episodes_list(self, request, pk=None):
         season = self.get_object()
         episodes = season.episodes.all()
-        serializer = EpisodeSerializer(episodes, many=True)
+        serializer = EpisodeSerializer(
+            episodes, many=True, context={'request': request})
         return Response(serializer.data)

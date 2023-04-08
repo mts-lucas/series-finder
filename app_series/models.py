@@ -24,7 +24,7 @@ class Serie(models.Model):
 
     genders = models.ManyToManyField(Gender, related_name='series')
 
-    platforms = models.ManyToManyField(Platform, related_name='platforms')
+    platforms = models.ManyToManyField(Platform, related_name='series')
 
     def __str__(self) -> str:
         return self.title
